@@ -1,0 +1,110 @@
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>lyft</title>
+		<!-- Latest compiled and minified CSS -->
+		<!-- Optional theme -->
+		<script src="https://use.fontawesome.com/9bdba234ec.js"></script>
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/menudesplegable.css">
+	
+	</head>
+	<body>
+		<header>
+			<div class="menu_bar">
+				<a href="#" class="bt-menu"><span class="icon-list2"></span><img class="perfil"	src="img/tumblr_oanp3vAfCt1v8d0wio2_400.png">
+				<img class="logo" src="img/Lyft-Logo-1.png"></a>
+			</div>
+	 
+			<nav>
+				<ul>
+					<li><a href="#"><span class="icon-house"></span>Home</a></li>
+					<hr>
+					<li><a href="#"><span class="icon-suitcase"></span>Free Rides</a></li>
+					<hr>
+					<li><a href="#"><span class="icon-rocket"></span>Ride History</a></li>
+					<hr>
+					<li><a href="#"><span class="icon-earth"></span>Payment</a></li>
+					<hr>
+					<li><a href="#"><span class="icon-mail"></span>Help</a></li>
+					<hr>
+					<li><a href="#"><span class="icon-mail"></span>Settings</a></li>
+					<hr>
+					<li><a href="#"><span class="icon-mail"></span>Sign up to drive</a></li>
+				</ul>
+			</nav>
+		</header>
+	
+	<div id='ubicacion'></div>
+<script type="text/javascript">
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(mostrarUbicacion);
+	} else {alert("¡Error! Este navegador no soporta la Geolocalización.");}
+function mostrarUbicacion(position) {
+    var times = position.timestamp;
+	var latitud = position.coords.latitude;
+	var longitud = position.coords.longitude;
+    var altitud = position.coords.altitude;	
+	var exactitud = position.coords.accuracy;	
+	var div = document.getElementById("ubicacion");
+	//div.innerHTML = "Timestamp: " + times + "<br>Latitud: " + latitud + "<br>Longitud: " + longitud + "<br>Altura en metros: " + altitud + "<br>Exactitud: " + exactitud;}	
+function refrescarUbicacion() {	
+	navigator.geolocation.watchPosition(mostrarUbicacion);}	
+</script>
+
+<!-- Se escribe un mapa con la localizacion anterior-->
+<div id="demo"></div>
+<div id="mapholder"></div>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+<script type="text/javascript">
+var x=document.getElementById("demo");
+function cargarmap(){
+navigator.geolocation.getCurrentPosition(showPosition,showError);
+function showPosition(position)
+  {
+  lat=position.coords.latitude;
+  lon=position.coords.longitude;
+  latlon=new google.maps.LatLng(lat, lon)
+  mapholder=document.getElementById('mapholder')
+  mapholder.style.height='100vh';
+  mapholder.style.width='500px';
+  var myOptions={
+  center:latlon,zoom:10,
+  mapTypeId:google.maps.MapTypeId.ROADMAP,
+  mapTypeControl:false,
+  navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+  };
+  var map=new google.maps.Map(document.getElementById("mapholder"),myOptions);
+  var marker=new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+  }
+function showError(error)
+  {
+  switch(error.code) 
+    {
+    case error.PERMISSION_DENIED:
+      x.innerHTML="Denegada la peticion de Geolocalización en el navegador."
+      break;
+    case error.POSITION_UNAVAILABLE:
+      x.innerHTML="La información de la localización no esta disponible."
+      break;
+    case error.TIMEOUT:
+      x.innerHTML="El tiempo de petición ha expirado."
+      break;
+    case error.UNKNOWN_ERROR:
+      x.innerHTML="Ha ocurrido un error desconocido."
+      break;
+    }
+  }}
+  cargarmap ();
+</script>
+
+		
+		<!-- /container -->
+		<script type='text/javascript' src='js/jquery.js'></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+		<script type='text/javascript' src="js/menudesplegable.js"></script>
+	</body>
+	</html>
